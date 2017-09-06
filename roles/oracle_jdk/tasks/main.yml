@@ -1,0 +1,28 @@
+- name: add environments to bash_profile
+  lineinfile:
+    path: "~/.bash_profile"
+    state: present
+    line: "export JAVA_HOME={{java_name}}"
+
+- name: check java exists
+  stat: path={{java_name}}
+  register: java_exists
+
+- block:
+  - name: Download Java
+    command: "wget -q -O {{java_archive}} --no-check-certificate --no-cookies --header 'Cookie: oraclelicense=accept-securebackup-cookie' {{java_download_url}} creates={{java_archive}}"
+
+  - name: Unpack archive
+    command: "tar -zxf {{java_archive}} -C {{download_folder}} creates={{java_name}}"
+
+  - name: Fix ownership
+    file: state=directory path={{java_name}} owner=root group=root recurse=yes
+
+  - name: Make Java available for system
+    command: 'alternatives --install "/usr/bin/java" "java" "{{java_name}}/bin/java" 2000'
+
+  - name: Clean up
+    file: state=absent path={{java_archive}}
+  become: true
+  when: not java_exists.stat.exists
+

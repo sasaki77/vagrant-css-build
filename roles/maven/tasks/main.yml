@@ -1,0 +1,27 @@
+- name: add environments to bash_profile
+  lineinfile:
+    path: "~/.bash_profile"
+    state: present
+    line: "{{item}}"
+  with_items:
+    - "export M3_HOME={{maven_name}}"
+    - "export PATH=$PATH:M3_HOME/bin"
+
+- name: check maven exists
+  stat: path={{maven_name}}
+  register: maven_exists
+
+- block:
+  - name: download and unarchive maven
+    unarchive: 
+      src: "{{maven_download_url}}"
+      dest: "/opt"
+      remote_src: True
+
+  - name: Fix ownership
+    file: state=directory path={{maven_name}} owner=root group=root recurse=yes
+
+  - name: Clean up
+    file: state=absent path={{maven_archive}}
+  become: true
+  when: not maven_exists.stat.exists
