@@ -3,16 +3,9 @@
   remote_user: vagrant
   vars_files:
       - cs-studio_vars.yml
+  roles:
+    - role: common
   tasks:
-  - name: install general packages
-    yum: name={{ item }} state=latest
-    become: true
-    with_items:
-      - vim
-      - git
-      - wget
-      - firefox
-
   - name: add environments to bash_profile
     lineinfile:
       path: "~/.bash_profile"
