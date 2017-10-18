@@ -1,0 +1,8 @@
+---
+- hosts: all
+  remote_user: vagrant
+  roles:
+    - role: ansible-role-oracle-jdk
+    - role: ansible-role-maven
+  tasks:
+    - include_tasks: cs-studio.yml

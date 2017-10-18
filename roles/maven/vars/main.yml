@@ -1,4 +1,0 @@
-download_folder: /opt
-maven_download_url: http://ftp.jaist.ac.jp/pub/apache/maven/maven-3/3.5.0/binaries/apache-maven-3.5.0-bin.tar.gz
-maven_name: "{{download_folder}}/apache-maven-3.5.0"
-maven_archive: "{{download_folder}}/apache-maven-3.5.0-bin.tar.gz"

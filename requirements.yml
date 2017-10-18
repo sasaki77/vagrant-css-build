@@ -1,0 +1,3 @@
+---
+- src: http://github.com/sasaki77/ansible-role-maven
+- src: http://github.com/sasaki77/ansible-role-oracle-jdk

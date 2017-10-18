@@ -1,9 +1,24 @@
 ---
-- hosts: all
-  remote_user: vagrant
-  vars_files:
-      - cs-studio_vars.yml
-  roles:
-    - role: common
-    - role: oracle_jdk
-    - role: maven
+- name: Install packages from yum
+  yum: name={{ item }} state=latest
+  with_items:
+    - vim
+    - git
+    - wget
+    - firefox
+  become: true
+
+- name: add environments to bash_profile
+  lineinfile:
+    path: "~/.bash_profile"
+    state: present
+    line: "{{item}}"
+  with_items:
+    - "export M3_HOME={{maven_name}}"
+    - "export PATH=$PATH:$M3_HOME/bin"
+
+- name: add environments to bash_profile
+  lineinfile:
+    path: "~/.bash_profile"
+    state: present
+    line: "export JAVA_HOME={{oracle_jdk_name}}"

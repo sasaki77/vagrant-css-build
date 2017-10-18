@@ -1,4 +1,0 @@
-download_folder: /opt
-java_download_url: http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-x64.tar.gz
-java_name: "{{download_folder}}/jdk1.8.0_144"
-java_archive: "{{download_folder}}/jdk-8u144-linux-x64.tar.gz"
