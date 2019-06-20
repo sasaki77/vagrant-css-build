@@ -1,16 +1,26 @@
 ---
-- name: Install packages from yum
-  yum: name={{ item }} state=latest
-  with_items:
-    - vim
-    - git
-    - wget
-    - firefox
+- name: Install latest packages from apt
+  apt:
+    name:
+      - vim
+      - git
+      - wget
+      - firefox
+      - openjdk-8-jdk
+    state: latest
+  become: true
+
+- name: Install specified packages from apt
+  apt:
+    name:
+      - openjfx=8u161-b12-1ubuntu2
+      - libopenjfx-jni=8u161-b12-1ubuntu2
+      - libopenjfx-java=8u161-b12-1ubuntu2
   become: true
 
 - name: add environments to bash_profile
   lineinfile:
-    path: "~/.bash_profile"
+    path: "~/.bashrc"
     state: present
     line: "{{item}}"
   with_items:
@@ -19,6 +29,6 @@
 
 - name: add environments to bash_profile
   lineinfile:
-    path: "~/.bash_profile"
+    path: "~/.bashrc"
     state: present
-    line: "export JAVA_HOME={{oracle_jdk_name}}"
+    line: "export JAVA_HOME={{java_home}}"
